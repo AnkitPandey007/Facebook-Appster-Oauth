@@ -1,0 +1,90 @@
+
+<nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#!/">Facebook</a>
+        </div> 
+      </div>
+  </nav>
+
+ <div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <h3 ng-show="isLoggedIn">{{welcomeMsg}}</h3>
+      <div ng-if="!isLoggedIn && !hasAccessToken">
+        <h4>Please Login</h4>
+        <i class="fa fa-facebook-square" style="font-size:48px;color:#3b5998; cursor: pointer" ng-click="login()"></i>
+      </div>
+      <div ng-if="isLoggedIn">
+        <div ng-click="logout()" style="cursor: pointer">
+          <h4>Logout</h4>
+          <i class="glyphicon glyphicon-log-out" style="font-size:30px;color:#3b5998; cursor: pointer"></i>
+          <img src="{{userInfo.profilePicURL}}"/>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="well" ng-show="isLoggedIn">
+        <h4>User Info</h4>
+        <ul>
+          <li>ID : {{userInfo.id}}</li>
+          <li>First Name: {{userInfo.first_name}} </li>
+          <li>Last Name : {{userInfo.last_name}} </li>
+          <li>Email : {{userInfo.email}}</li>
+          <li>Location : {{userInfo.location.name}}</li>
+          <li>Birthday : {{userInfo.birthday}}</li>
+          <!--<li>FB Profile : {{userInfo.link}}</li>-->
+        </ul>
+      </div>
+
+      <div class="well" ng-show="isLoggedIn">
+        <h4>Permissions</h4>
+        <ul>
+          <li ng-repeat="permission in arrPermissions">{{permission.permission}} - {{permission.status}} </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="col-md-8" ng-show="isLoggedIn">
+      <br>
+      <div class="row">
+        <div class="col-md-6"><h3>Facebook App!</h3>
+        <div class="fb-like" data-href="http://10.12.15.80:8080/#!/facebook" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+        </div>
+        <div id="fb-root"></div>
+      </div>
+      <form ng-submit="postStatus()">
+        <div class="form-group">
+          <label>Status Update:</label>
+          <textarea class="form-control" ng-model="body"></textarea><br>
+          <button type="submit" class="btn btn-primary" class="form-control">Submit</button>
+        </div>
+      </form>
+      <br><br>
+      <h4>Posts:</h4>
+      <div ng-repeat="post in arrPosts" class="posts">
+        <div class="row">
+          <div class="col-md-1">
+            <div class="string">
+              <img ng-src="{{userInfo.profilePicURL}}">
+            </div>
+          </div>
+          <div class="col-md-11">
+            <div ng-bind-html="trustAsHtml(post.story)"></div>
+            <div ng-bind-html="trustAsHtml(post.message)"></div>
+            <div ng-bind-html="trustAsHtml(post.created_time)"></div>
+          </div>
+        </div>
+        --------------------------------------------------------------------------
+        
+    </div>
+  </div>
+</div>
+ 
